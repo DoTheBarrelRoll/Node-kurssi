@@ -1,0 +1,14 @@
+{
+  "name": "mongodb_basics",
+  "version": "1.0.0",
+  "description": "monngodb basic example",
+  "main": "mongo_create.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "tuito",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.1.10"
+  }
+}
