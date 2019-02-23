@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Student = require('./models/Student.js');
 
 
-var oppilas = new Student({student_code: '0000', name: 'Olli Opiskelija', email: 'olliopiskelija@jamk.fi', study_points: 70, grades: [{course_code: "node kehitys", grade: 3}]});
+var oppilas = new Student({student_code: '0000', name: 'Olli Opiskelija', email: 'olliopiskelija@jamk.fi', study_points: 120, grades: [{course_code: "node kehitys", grade: 3}]});
 
 
 oppilas.save(function(err, oppilas) {
