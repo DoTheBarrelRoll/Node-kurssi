@@ -1,69 +1,35 @@
+// Importing required modules
 const express = require('express');
-const session = require('express-session');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const validator = require('express-validator');
-
-const index = require('./routes/index');
-const users = require('./routes/users');
-
+const mongoose = require('mongoose');
 const app = express();
 
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// body-parser setup
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-/*Session käyttöönotto
-  Sessio toimii siten että luotaessa sessio syntyy selaimelle automaattisesti cookie jonka
-  nimi on connect.sid (sessionid). Se ylläpitää yhteyttä palvelimella olevaan sessioon
-  sen sisältämän sessioid:n avulla.
-  Itse sessio sisältää sessiomuuttujia, joita voidaan lukea siirryttäessä sivulta toiselle.
-  Jos sessiomuuttujana on vaikka salasana, niin sivuille siirryttäessä voidaan tutkia onko
-  salasana oikea ja jos on, päästetään käyttäjä sivulle.
-*/
-app.use(session({
-    secret: 'salausarvo',
-    cookie: {
-        maxAge: 60000
-    },
-    resave: true,
-    saveUninitialized: true
-}));
 
-app.use(validator()); // lomakevalidaattorin käyttöönotto
+// Database config and connection
+const dbConfig = require('./config/dbconnection.js');
+mongoose.Promise = global.Promise;
 
-app.use('/', index); // index-reitti
-app.use('/users', users); // users-reitti
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+mongoose.connect(dbConfig.url, {
+    useNewUrlParser: true
+}).then(() => {
+    console.log("Successfully connected to the database");
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+app.get('/', (req, res) => {
+    res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
+});
+
+require('./routes/student.routes.js')(app);
+
+app.listen(3000, () => {
+    console.log("Server is listening on port 3000");
 });
 
 module.exports = app;
