@@ -4,7 +4,16 @@
 */
 const express = require('express');
 const router = express.Router();
-let sess;
+const db = require('../models/dbconnection.js');
+const Student = require('../models/Student.js');
+
+router.get('/opiskelijat', function(req, res) {
+  Student.find({}, function(err, docs) {
+    if (err) console.log(error);
+    res.render(docs);
+  })
+})
+
 
 // sovelluksen juuri on osoitteessa http://localhost:3000
 // Kun mennään sovelluksen juureen, katsotaan ollanko jo kirjauduttu
@@ -62,7 +71,9 @@ router.get('/sivu1', function(req, res) {
             sessid: sess.id
         });
     } else {
-        res.sendStatus(200);
+        res.render('error', { // jos passu väärä, mennään error-sivulle
+            message: 'Et ole kirjautunut tai salasanasi on väärä',
+        });
     }
 });
 

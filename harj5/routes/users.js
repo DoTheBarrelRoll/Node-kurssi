@@ -10,25 +10,6 @@ router.get('/', function(req, res, next) {
     let query = Student.find({})
     Student.find({}, function(err, docs) {
       if (err) console.log(error);
-      res.render('sivu3', {
-        title: 'Opiskelijoiden tiedot',
-        students: docs
-      });
-
-    })
-  } else {
-    res.render('error', { // jos passu väärä, mennään error-sivulle
-        message: 'Et ole kirjautunut tai salasanasi on väärä',
-    });
-  }
-});
-
-router.get('/sivu3', function(req, res, next) {
-  sess = req.session
-  if (sess.pass === "qwerty") {
-    let query = Student.find({})
-    Student.find({}, function(err, docs) {
-      if (err) console.log(error);
       res.render('users', {
         title: 'Opiskelijoiden tiedot',
         students: docs
