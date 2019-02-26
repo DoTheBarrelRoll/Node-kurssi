@@ -24,7 +24,7 @@ describe('Test authentication', function(done) {
     });
 
     it('should return a 200 response if the user is authenticated', function(done) {
-        authenticatedUser.get('/users')
+        authenticatedUser.get('/sivu3')
             .expect(200) // supertest expect
             .end(done)
     });

@@ -4,6 +4,8 @@
 */
 const express = require('express');
 const router = express.Router();
+const db = require('../models/dbconnection.js');
+const Student = require('../models/Student.js');
 let sess;
 
 // sovelluksen juuri on osoitteessa http://localhost:3000
@@ -102,5 +104,23 @@ router.get('/logout', function(req, res) {
     });
 });
 
+router.get('/sivu3', function(req, res, next) {
+  sess = req.session
+  if (sess.pass === "qwerty") {
+    let query = Student.find({})
+    Student.find({}, function(err, docs) {
+      if (err) console.log(error);
+      res.render('sivu3', {
+        title: 'Opiskelijoiden tiedot',
+        students: docs
+      });
+
+    })
+  } else {
+    res.render('error', { // jos passu väärä, mennään error-sivulle
+        message: 'Et ole kirjautunut tai salasanasi on väärä',
+    });
+  }
+});
 
 module.exports = router;
