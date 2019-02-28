@@ -6,7 +6,8 @@ const Student = require('../models/Student.js');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   let query = Student.find({})
-  Student.find({}, function(err, docs) {
+  query.select('name study_points -_id')
+  query.exec(function(err, docs) {
     if (err) console.log(error);
     res.render('users', {
       title: 'Testi123',
