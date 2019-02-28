@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var conn = mongoose.connect('mongodb://localhost/myapp', {
-  useMongoClient: true,
-  /* other options */
-});
-module.exports = conn;
+mongoose.connect('mongodb://localhost:27017/admin', {userMongoClient: true});
+
+var db = mongoose.connection;
+
+module.exports = db;
