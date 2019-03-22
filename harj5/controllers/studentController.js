@@ -1,5 +1,6 @@
 const Student = require('../models/Student.js');
 
+
 exports.findOne = (req, res) => {
   Student.findById(req.params.studentId)
   .then(student => {
@@ -55,11 +56,7 @@ exports.create = (req, res) => {
     student_code: req.body.student_code,
     name: req.body.name,
     email: req.body.email,
-    grades: [
-      req.body.grades.forEach(function(course) {
-        {course_code: course.course_code, grade: course.grade}
-      })
-    ]
+    grades: req.body.grades
   });
   oppilas.save()
   .then(student => {
@@ -70,6 +67,6 @@ exports.create = (req, res) => {
     }
     res.send("Student succesfully added, " + student);
   }).catch(err => {
-    res.status(404).send("")
+    res.status(404).send("An error occurred, " + err)
   });
 };

@@ -1,18 +1,20 @@
+
+
 module.exports = (app) => {
   const students = require('../controllers/studentController.js');
 
-    // Create a new student
-    app.post('/students', students.create);
+  // Create a new student
+  app.post('/students', students.create);
 
-    // Retrieve all students
-    app.get('/students', students.findAll);
+  // Retrieve all students
+  app.get('/students', students.findAll);
 
-    // Retrieve a single student with studentId
-    app.get('/students/:studentId', students.findOne);
+  // Retrieve a single student with studentId
+  app.get('/students/:studentId', students.findOne);
 
-    // Update a student with studentId
-    app.put('/students/:studentId', students.update);
+  // Update a student with studentId
+  app.put('/students/:studentId', students.update);
 
-    // Delete a student with studentId
-    app.delete('/students/:studentId', students.delete);
+  // Delete a student with studentId
+  app.delete('/students/:studentId', students.delete);
 }
