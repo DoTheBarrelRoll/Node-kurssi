@@ -48,7 +48,23 @@ exports.delete = (req, res) => {
 };
 
 exports.update = (req, res) => {
-
+  Student.findByIdAndUpdate(req.params.studentId, {
+    student_code: req.body.student_code,
+    name: req.body.name,
+    email: req.body.email,
+    grades: req.body.grades,
+    study_points: req.body.study_points
+  }, {new: true})
+  .then(student => {
+    if(!student) {
+      res.status(404).send({
+        message: "Student with given ID not found"
+      });
+    }
+    res.send("Student succesfully updated, \n" + student);
+  }).catch(err => {
+    res.status(404).send(err)
+  });
 };
 
 exports.create = (req, res) => {
@@ -56,7 +72,8 @@ exports.create = (req, res) => {
     student_code: req.body.student_code,
     name: req.body.name,
     email: req.body.email,
-    grades: req.body.grades
+    grades: req.body.grades,
+    study_points: req.body.study_points
   });
   oppilas.save()
   .then(student => {
@@ -70,3 +87,19 @@ exports.create = (req, res) => {
     res.status(404).send("An error occurred, " + err)
   });
 };
+
+exports.updateGrade = (req, res) => {
+  Student.findOneAndUpdate({_id: req.params.studentId, 'grades._id': req.params.gradeId }, {
+    "$set": { "grades.$.grade": req.body.grade}
+  })
+  .then(grade => {
+    if(!grade){
+      res.status(404).send("No grade found with given ID " + req.params.gradeId)
+    }
+    res.send("Grade updated succesfully, " + grade);
+  }).catch(err => {
+    if(err){
+      res.send(err);
+    }
+  })
+  };

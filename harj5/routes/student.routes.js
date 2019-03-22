@@ -15,6 +15,9 @@ module.exports = (app) => {
   // Update a student with studentId
   app.put('/students/:studentId', students.update);
 
-  // Delete a student with studentId
-  app.delete('/students/:studentId', students.delete);
+    // Delete a student with studentId
+    app.delete('/students/:studentId', students.delete);
+
+    //Update a grade
+    app.put('/students/:studentId/:gradeId', students.updateGrade);
 }
