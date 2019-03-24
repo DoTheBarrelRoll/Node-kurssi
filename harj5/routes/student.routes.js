@@ -20,4 +20,7 @@ module.exports = (app) => {
 
   //Update a grade
   app.put('/students/:studentId/:gradeId', students.updateGrade);
+
+  //Add a grade
+  app.post('/students/:studentId', students.addGrade);
 }

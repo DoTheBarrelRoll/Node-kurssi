@@ -103,3 +103,15 @@ exports.updateGrade = (req, res) => {
     }
   })
   };
+
+exports.addGrade = (req, res) => {
+  Student.findOneAndUpdate({_id: req.params.studentId}, 
+    {$push: {grades: req.body}
+  })
+  .then(grade => {
+    if(!grade){
+      res.status(404).send("No grade found in request body");
+    }
+    res.send("Grade added succesfully, " + req.body);
+  }) 
+};
