@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
 });
 
 require('./routes/student.routes.js')(app);
+require('./routes/student.routes.js')(app);
 
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
