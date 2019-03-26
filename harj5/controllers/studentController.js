@@ -82,7 +82,7 @@ exports.create = (req, res) => {
         message: "Request body was empty, no student added"
       });
     }
-    res.send("Student succesfully added, " + student);
+    res.send(student);
   }).catch(err => {
     res.status(404).send("An error occurred, " + err)
   });
