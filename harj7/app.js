@@ -25,7 +25,7 @@ mongoose.connect(dbConfig.url, {
 
 
 app.get('/', (req, res) => {
-    res.json({"message": "Tervetuloa Opiskelija API:n"});
+    res.render(index);
 });
 
 require('./routes/student.routes.js')(app);
