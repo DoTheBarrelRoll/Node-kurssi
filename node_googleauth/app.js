@@ -42,6 +42,8 @@ app.use(flash()); // passportin login-sessio tarvitsee
 //reitit
 app.use('/', index);
 app.use('/users', users);
+require('./routes/student.routes.js')(app);
+require('./routes/student.routes.js')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
