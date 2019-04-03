@@ -1,6 +1,8 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const User = require('./models/User.js');
-const configAuth = require('./auth.js');
+const User = require('./models/User');
+const configAuth = require('./auth');
+const jwt = require('jsonwebtoken');
+var config = require ('./config/config.js');
 
 /* Anonyymi funktio joka palauttaa Google-käyttäjän kannasta tai luo uuden käyttäjän kantaan
 ja palauttaa sen. Käyttäjän tiedot saadaan Googlen login-applikaatiosta.
@@ -48,10 +50,13 @@ module.exports = function (passport) {
                     // jos käyttäjää ei ole kannassa tehdään uusi käyttäjä
                     const newUser = new User();
 
+                    var jwtToken = jwt.sign({ id: newUser.google.id}, config.secret, {expiresIn: 86400});
+
                     newUser.google.id = profile.id;
                     newUser.google.token = token;
                     newUser.google.name = profile.displayName;
                     newUser.google.email = profile.emails[0].value;
+                    newUser.jwtToken = jwtToken;
 
                     // käyttäjä kantaan
                     newUser.save(function (err) {

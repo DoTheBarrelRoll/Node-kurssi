@@ -1,20 +1,18 @@
 var mongoose = require('mongoose');
 
-var userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true
+var userSchema = mongoose.Schema({
+
+// Käyttäjän Google-tiedot
+    google: {
+        id: String,
+        token: String,// Googlen access-token joka valtuuttaa pääsyyn hakemaan tiedot Googlelta
+        email: String,
+        name: String
     },
-    password: {
-        type: String,
-        required: true,
-    },
-    isadmin: {
-        type: Boolean,
-        required: true
-    }
+
+    jwtToken: String
+
+
 });
 
-var User = mongoose.model('user', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);
