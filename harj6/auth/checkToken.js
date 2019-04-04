@@ -3,7 +3,12 @@ const config = require('../config/config.js');
 const secret = config.secret;
 
 exports.verifyToken = (req, res, next) => {
-        var token = req.headers['x-access-token'];
+        var token = req.body.token;
+
+        if (req.headers['x-access-token'] != null) {
+            token = req.headers['x-access-token'];
+        }
+
         if (!token) return res.status(401).send({
             auth: false,
             message: 'No token found'
