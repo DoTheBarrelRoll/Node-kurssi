@@ -27,7 +27,8 @@ exports.register = (req, res) => {
         }
 
         // Create token
-        var token = jwt.sign({ id: username._id}, config.secret, {expiresIn: 86400});
+        var token = jwt.sign({ username: req.body.username, isadmin: true}, config.secret, {expiresIn: 86400});
+
 
         res.status(200).send({success: true, token: token});
     })
@@ -42,7 +43,7 @@ exports.login = (req, res) => {
 
         if (!passwordIsValid) return res.status(401).send({auth: false, token: null});
 
-        var token = jwt.sign({ id: user._id}, config.secret, {expiresIn: 86400});
+        var token = jwt.sign({ username: req.body.username, isadmin: true }, config.secret, {expiresIn: 86400});
 
         res.status(200).send({auth: true, token: token, user: user});
     }
