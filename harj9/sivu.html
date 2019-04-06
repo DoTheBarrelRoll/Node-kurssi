@@ -2,28 +2,65 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="tyyli.css">
+    <link rel="stylesheet" type="text/css" href="tyyli.css">
     <meta charset="UTF-8">
     <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+        var socket = io();
+        window.onload = function() {
+            var allUsers = document.getElementById("users");
+            var peli = document.getElementById("peli");
+
+
+            // Odotetaan pelaajanlistan eventtiä ja sitten lisätään pelaajat listaan
+            socket.on('users', function (data) {
+                allUsers.innerHTML = data.users; 
+            });
+
+            // Odotetaan peliin liittyviä eventtejä ja kirjataan ne peli-ikkunaan 
+            socket.on('peli', function(data) {
+                peli.innerHTML += data.message + '<br>'
+            });  
+        }
+        // Lähetetään pelaajan arvaus backendille tarkistusta varten
+        function submit () {
+                var arvaus = document.getElementById("kenttä").value;
+                socket.emit('arvaus', arvaus);
+                document.getElementById('kenttä').value = '';
+            };
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Arvaus peli</title>
+    <style>
+        #peli {
+            overflow: auto;
+        }
+
+        #selite {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="header">Otsikko</h1>
+        <h1 class="header text-center">Numeropeli</h1>
+        <p class="text-center" id="selite">Kirjoita arvauksesi tekstikenttään tasalukuna. Voit myös lähettää viestejä kirjoittamalla tekstiä.</p>
+        <hr>
         <div class="row">
-            <div class="col-8">
-                <h3>PELI</h3>
-                <div id="peli" class="card text-center">Arvaa numero ja voita</div>
-                <form class="form-inline">
-                    <input type="text" class="form-control" placeholder="Arvaa numero...">
-                    <button class="btn btn-primary">Arvaa</button>
-                </form>
+            <div class="col-md-12 col-lg-8 pt-4">
+                <h3>Chat</h3>
+                <div id="peli" class="card p-3"></div>
+                     <input type="text" id="kenttä" class="form-control" placeholder="Arvaa numero tai kirjoita viesti"><button class="btn btn-primary btn-block" type="button" onclick="submit()">Arvaa</button>
             </div>
-            <div class="col-4">
-                <div class="card">Pelaajalista</div>
+            <div class="col-md-12 col-lg-4 pt-4">
+                <h3>Pelaajalista</h3>
+                <div id="users" class="card pl-2"></div>
             </div>
         </div>
     </div>
