@@ -11,7 +11,8 @@ var userSchema = new mongoose.Schema({
         required: true,
     },
     ratings: {
-        type: 
+        type: ratingSchema,
+        required: false
     }
 });
 

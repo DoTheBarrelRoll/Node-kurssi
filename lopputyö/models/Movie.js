@@ -4,8 +4,10 @@ var movieSchema = new mongoose.Schema({
     name: { type: String, required: true },
     genre: { type: String, required: false, default: "Undefined" },
     director: { type: String, required: false },
-    releaseDate: { type: Date, required: false },
+    releaseDate: { type: String, required: false },
     summary: { type: String, required: true}
 });
 
-module.exports = movieSchema;
+var Movie = mongoose.model('movie', movieSchema);
+
+module.exports = Movie;

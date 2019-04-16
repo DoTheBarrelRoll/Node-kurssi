@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const session = require('express-session');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -6,11 +7,14 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const validator = require('express-validator');
+const port = process.env.PORT || 3000;
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const moviepage = require('./routes/moviepage');
 
 const app = express();
+
+
 
 
 // view engine setup
@@ -25,7 +29,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 /*Session käyttöönotto
   Sessio toimii siten että luotaessa sessio syntyy selaimelle automaattisesti cookie jonka
   nimi on connect.sid (sessionid). Se ylläpitää yhteyttä palvelimella olevaan sessioon
@@ -45,8 +49,8 @@ app.use(session({
 
 app.use(validator()); // lomakevalidaattorin käyttöönotto
 
-app.use('/', index); // index-reitti
-app.use('/users', users); // users-reitti
+app.use('/', index);
+app.use('/movie/', moviepage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,7 +67,11 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.send(err);
 });
+
+app.listen(port, () => {
+    console.log("Listening on port " + port)
+})
 
 module.exports = app;
