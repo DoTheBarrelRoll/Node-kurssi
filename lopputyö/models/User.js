@@ -10,10 +10,9 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    ratings: {
-        type: ratingSchema,
-        required: false
-    }
+    ratings: [ratingSchema]
 });
+
+var User = mongoose.model('user', userSchema);
 
 module.exports = userSchema;

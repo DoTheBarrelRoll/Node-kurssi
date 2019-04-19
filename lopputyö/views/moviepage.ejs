@@ -24,7 +24,7 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid" style="margin-top: 8%;">
+    <div class="container" style="margin-top: 8%;">
         <div class="row">
             <div class="col-6">
                 <h3>Movie details</h3>
@@ -34,10 +34,24 @@
                 <h5>Genre: </h4><%= leffa.genre %> <br>
                 <h5>Director: </h4><%= leffa.director %> <br>
                 <h5>Released in: </h4><%=leffa.releaseDate %> <br>
-                <% }) %>
+                <% }); %>
             </div>
             <div class="col-6">
                 <h3>Ratings</h3>
+                <% leffat.forEach(function (leffa) { %>
+                <% leffa.ratings.forEach(function(arvostelu) { %>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <%= arvostelu.comment %>
+                            </div>
+                            <div class="card-text">
+                                <%= arvostelu.grade %>
+                            </div>
+                        </div>
+                    </div>
+                    <% })%>
+                    <% })%>
             </div>
         </div>
 

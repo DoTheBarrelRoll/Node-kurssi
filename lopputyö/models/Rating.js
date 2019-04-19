@@ -3,12 +3,10 @@ var movieSchema = require('./Movie.js');
 var userSchema = require("./User.js")
 
 var ratingSchema = new mongoose.Schema({
-    movie: {
-        type: movieSchema,
-        required: true
-    },
     grade: {
         type: Number,
+        min: 0,
+        max: 5,
         required: true
     },
     comment: {
@@ -17,7 +15,7 @@ var ratingSchema = new mongoose.Schema({
     },
     user: {
         type: userSchema,
-        required: true
+        required: false
     }
 });
 

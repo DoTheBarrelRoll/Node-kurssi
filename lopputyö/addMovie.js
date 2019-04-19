@@ -1,13 +1,14 @@
 const db = require('./config/dbconnection');
 const mongoose = require('mongoose');
-const Movie = require('./models/Movie');
+const movieSchema = require('./models/Movie');
 
-var leffa = new Movie ({
-    name: "Titanic",
-    genre: "Drama, Romance",
-    director: "James Cameron",
-    releaseDate: "1997",
-    summary: "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic."
+var Movie = mongoose.model('movie', movieSchema);
+var leffa = new Movie({
+    name: "Fight Club",
+    genre: "Drama",
+    director: "David Fincher",
+    releaseDate: "1999",
+    summary: "An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more."
 });
 
 leffa.save((err, leffa) => {
@@ -16,8 +17,4 @@ leffa.save((err, leffa) => {
     }
 });
 
-Movie.find((err, leffa) => {
-    if (err) console.log(err);
-    console.log(leffa);
-    db.close();
-});
+console.log("Movie added succesfully");

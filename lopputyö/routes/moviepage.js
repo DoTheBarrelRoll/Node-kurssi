@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const db = require('../config/dbconnection');
-const Movie = require('../models/Movie');
+const movieSchema = require('../models/Movie');
+const Movie = mongoose.model('movie', movieSchema);
 
 router.get('/:id', (req, res) => {
     console.log(req.params.id)
