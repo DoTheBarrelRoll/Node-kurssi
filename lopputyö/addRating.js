@@ -5,10 +5,10 @@ var ratingSchema = require('./models/Rating');
 var Movie = mongoose.model('movie', movieSchema);
 var arvosana = mongoose.model('rating', ratingSchema);
 
-arvosana = { grade: 5, comment: "Melko jännittävä elokuva" };
+arvosana = { grade: 2, comment: "En pitänyt kovinkaan paljoa" };
 
 Movie.findOneAndUpdate(
-    { name: 'Fight Club' },
+    { name: 'Titanic' },
     { $push: { ratings: arvosana } },
     function (err, success) {
         if (err) console.log(err);

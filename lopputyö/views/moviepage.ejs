@@ -27,31 +27,41 @@
     <div class="container" style="margin-top: 8%;">
         <div class="row">
             <div class="col-6">
-                <h3>Movie details</h3>
-                <% leffat.forEach(function (leffa) { %>
-                <h5>Name: </h4><%= leffa.name %> <br>
-                <h5>Summary: </h4><%= leffa.summary %> <br>
-                <h5>Genre: </h4><%= leffa.genre %> <br>
-                <h5>Director: </h4><%= leffa.director %> <br>
-                <h5>Released in: </h4><%=leffa.releaseDate %> <br>
-                <% }); %>
+                    <h3>Movie details</h3>
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <% leffat.forEach(function (leffa) { %>
+                        <h5>Name: </h4><%= leffa.name %> <br><br>
+                            <h5>Summary: </h4><%= leffa.summary %> <br><br>
+                                <h5>Genre: </h4><%= leffa.genre %> <br><br>
+                                    <h5>Director: </h4><%= leffa.director %> <br><br>
+                                        <h5>Released in: </h4><%=leffa.releaseDate %> <br>
+                                            <a href="/movie/<%= leffa._id%>/rate">Rate this movie</a>
+                                            <% }); %>
+                        
+                    </div>
+                </div>
+
+
             </div>
             <div class="col-6">
                 <h3>Ratings</h3>
                 <% leffat.forEach(function (leffa) { %>
                 <% leffa.ratings.forEach(function(arvostelu) { %>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <%= arvostelu.comment %>
-                            </div>
-                            <div class="card-text">
-                                <%= arvostelu.grade %>
-                            </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h2><%= arvostelu.grade %> / 5</h2>
                         </div>
+                        <div class="card-title">
+                            <%= arvostelu.comment %>
+                        </div>
+
                     </div>
-                    <% })%>
-                    <% })%>
+                </div>
+                <% })%>
+                <% })%>
             </div>
         </div>
 
