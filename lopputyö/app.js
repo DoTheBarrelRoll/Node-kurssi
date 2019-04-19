@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 
 const index = require('./routes/index');
 const moviepage = require('./routes/moviepage');
+const register = require('./routes/register');
 
 const app = express();
 
@@ -49,8 +50,10 @@ app.use(session({
 
 app.use(validator()); // lomakevalidaattorin käyttöönotto
 
+// Reitit eri sivuille
 app.use('/', index);
-app.use('/movie/', moviepage);
+//app.use('/movie/', moviepage);
+//app.use('/register', register);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

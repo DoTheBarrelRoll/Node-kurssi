@@ -1,35 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/dbconnection');
-const Movie = require('../models/Movie');
+const bcrypt = require('bcrypt');
+let session
 
-// Etusivu
+
 router.get('/', (req, res) => {
-    Movie.find({}, (err, docs) => {
-        if(err) console.log(err);
-        res.render('index', {
-            leffat: docs
-        });
-    });
-});
-
-// Elokuvien omat sivut ID:n mukaan
-router.get('/movie/:id', (req, res) => {
-    console.log(req.params.id)
-    Movie.find({_id: req.params.id}, (err, docs) => {
-        if(err) console.log(err);
-        res.render('moviepage', {
-            leffat: docs
-        });
-    });
-});
-
-// Käyttäjän rekisteröinti sivu
-router.get('/register', (req, res) => {
     res.render('register');
 });
 
-router.post('/submit', (req,res) => {
+router.post('/', (req,res) => {
 
     req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
