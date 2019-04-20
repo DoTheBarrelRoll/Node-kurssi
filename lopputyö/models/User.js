@@ -12,11 +12,11 @@ var userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: false
     },
     ratings: [ratingSchema]
 });
 
 var User = mongoose.model('user', userSchema);
 
-module.exports = userSchema;
+module.exports = User;
