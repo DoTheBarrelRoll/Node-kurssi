@@ -26,11 +26,9 @@
     </nav>
     <div class="container" style="margin-top: 8%;">
             <% if(errors){ %>
-                <div class="alert alert-danger">
                 <% errors.forEach(function(error) { %>
                     <p><%= error.msg %></p>
                 <% }); %>
-            </div>
             <% } %>
         
         

@@ -59,25 +59,36 @@ router.post('/register', (req, res) => {
     // console.log(errors);
     // jos on validaatiovirheitä, pysytään kirjautumissivulla
     if (errors) {
-        sess.errors = errors; // virheet sessioon josta ne voidaan näyttää kirjautumissivulla
+        sess.errors = errors;
         res.redirect('/register');
-        // muuten siirrytään reittiin sivu1 jossa tarkistetaan passwordin oikeellisuus
+        console.log(errors);
     } else {
         // Jos tiedot oikein, tallennetaan käyttäjä ja kirjaudutaan sisään
-        var hashPassu = bcrypt.hashSync(req.body.pass1, 8);
-        var userinfo = {
-            username: req.body.username,
-            password: hashPassu,
-            email: req.body.email
-        };
 
-        var user = new User(userinfo);
-        user.save();
+        User.find({email: req.body.email}, (err, user) => {
+            if (user.length){
+                errors = [{msg: "Email already registered, enter a different email"}];
+                sess.errors = errors;
+                console.log(user);
+                res.redirect('/register');
+            } else {
+                var hashPassu = bcrypt.hashSync(req.body.pass1, 8);
+                var userinfo = {
+                    username: req.body.username,
+                    password: hashPassu,
+                    email: req.body.email
+                };
 
-        sess.login = true;
-        sess.username = req.body.username; // sess.email saa arvon login-sivulta (index.ejs)
-        res.redirect('/');
-        console.log(sess);
+                var user = new User(userinfo);
+                user.save();
+
+                sess.login = true;
+                sess.username = req.body.username; // sess.email saa arvon login-sivulta (index.ejs)
+                res.redirect('/');
+                console.log(sess);
+            }
+        });
+        
     }
 });
 
@@ -105,21 +116,21 @@ router.post('/login', (req, res) => {
     } else {
         // Jos tiedot oikein, tallennetaan käyttäjä ja kirjaudutaan sisään
         var hashPassu = bcrypt.hashSync(req.body.pass1, 8);
+        console.log(hashPassu);
 
-        User.find({username: req.body.username, password: hashPassu}, (user) => {
-            if(user) {
+        User.find({username: req.body.username, password: hashPassu}, (err, user) => {
+            if(user.length) {
+                console.log(user);
                 sess.login = true;
                 sess.username = req.body.username;
                 res.redirect('/');
             } else {
-                errors = {msg: 'Username or password was incorrect'};
+                errors = [{msg: 'Username or password was incorrect'}];
+                sess.errors = errors;
+                res.redirect('/login');
             }
         });
 
-        sess.login = true;
-        sess.username = req.body.username; // sess.email saa arvon login-sivulta (index.ejs)
-        res.redirect('/');
-        console.log(sess);
     }
 });
 
