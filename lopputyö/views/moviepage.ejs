@@ -19,8 +19,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" href="/login">Login</a>
-                <a class="nav-item nav-link" href="/register">Register</a>
+                    <% if (username) { %>
+                        <a class="nav-item nav-link">Logged in as <%= username %></a> 
+                        <a class="nav-item nav-link text-danger" href="/logout">Log out</a>
+                    <% } else { %>
+                        <a class="nav-item nav-link" href="/login">Login</a>
+                        <a class="nav-item nav-link" href="/register">Register</a>
+                    <% } %>
             </div>
         </div>
     </nav>
@@ -47,20 +52,21 @@
             </div>
             <div class="col-6">
                 <h3>Ratings</h3>
-                <% leffat.forEach(function (leffa) { %>
-                <% leffa.ratings.forEach(function(arvostelu) { %>
+                <% arvostelut.forEach(function (arvio) { %>
                 <div class="card">
                     <div class="card-body">
                         <div class="card-text">
-                            <h2><%= arvostelu.grade %> / 5</h2>
+                            <h2><%= arvio.grade %> / 5</h2>
                         </div>
                         <div class="card-title">
-                            <%= arvostelu.comment %>
+                            <%= arvio.comment %>
+                        </div>
+                        <div class="card-text">
+                            <i>- <%= arvio.user %></i>
                         </div>
 
                     </div>
                 </div>
-                <% })%>
                 <% })%>
             </div>
         </div>

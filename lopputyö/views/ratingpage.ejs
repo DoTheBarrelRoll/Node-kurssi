@@ -19,14 +19,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" href="/login">Login</a>
-                <a class="nav-item nav-link" href="/register">Register</a>
+                    <% if (username) { %>
+                        <a class="nav-item nav-link">Logged in as <%= username %></a> 
+                        <a class="nav-item nav-link text-danger" href="/logout">Log out</a>
+                    <% } else { %>
+                        <a class="nav-item nav-link" href="/login">Login</a>
+                        <a class="nav-item nav-link" href="/register">Register</a>
+                    <% } %>
             </div>
         </div>
     </nav>
     <div class="container" style="margin-top: 8%;">
-      
-        <form class="form-control" method="POST" action="/register">
+            <% if(errors){ %>
+                <% errors.forEach(function(error) { %>
+                    <p><%= error.msg %></p>
+                <% }); %>
+            <% } %>
+        <form class="form-control" method="POST" action="/movie/<%= leffa.id%>/saverating">
             <div class="form-group">
                 <label>Rating</label>
                 <input type="text" name="grade" class="form-control" placeholder="Rating from 0 to 5">
@@ -36,7 +45,7 @@
                 <label>Comment</label>
                 <input type="text" name="comment" class="form-control" placeholder="Comment about the movie">
             </div>
-            <button class="btn btn-primary" type="submit">Register</button>
+            <button class="btn btn-primary" type="submit">Submit rating</button>
         </form>
     </div>
 

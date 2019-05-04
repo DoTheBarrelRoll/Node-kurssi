@@ -13,8 +13,7 @@ var userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: false
-    },
-    ratings: [ratingSchema]
+    }
 });
 
 var User = mongoose.model('user', userSchema);

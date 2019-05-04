@@ -14,9 +14,15 @@ var ratingSchema = new mongoose.Schema({
         required: false
     },
     user: {
-        type: userSchema,
-        required: false
+        type: String,
+        required: true
+    },
+    movieId: {
+        type: String,
+        required: true
     }
 });
 
-module.exports = ratingSchema;
+var Rating = mongoose.model('rating', ratingSchema);
+
+module.exports = Rating;

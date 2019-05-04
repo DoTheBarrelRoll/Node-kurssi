@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const path = require('path');
-const favicon = require('serve-favicon');
+//const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -10,8 +10,8 @@ const validator = require('express-validator');
 const port = process.env.PORT || 3000;
 
 const index = require('./routes/index');
-const moviepage = require('./routes/moviepage');
-const register = require('./routes/register');
+//const moviepage = require('./routes/moviepage');
+//const register = require('./routes/register');
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(cookieParser());
+//app.use(cookieParser());
 
 /*Session käyttöönotto
   Sessio toimii siten että luotaessa sessio syntyy selaimelle automaattisesti cookie jonka
@@ -40,9 +40,9 @@ app.use(cookieParser());
   salasana oikea ja jos on, päästetään käyttäjä sivulle.
 */
 app.use(session({
-    secret: 'salausarvo',
+    secret: 'movieapp4201337',
     cookie: {
-        maxAge: 60000
+        maxAge: 1800000
     },
     resave: true,
     saveUninitialized: true
